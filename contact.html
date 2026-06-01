@@ -409,9 +409,7 @@ Send Us a Message
 <?php
 echo $success;
 echo $error;
-?>
-<form action="contact.php" method="POST">
-
+<form action="contact.php" method="POST" enctype="multipart/form-data">
     <input type="text" 
         name="name"
         class="form-control" 
@@ -441,6 +439,20 @@ echo $error;
         class="form-control" 
         placeholder="Your Message"
         required></textarea>
+
+    <div class="mb-3">
+
+    <label style="color:#fff;margin-bottom:10px;display:block;">
+        Upload Design / Logo / Sample Image
+    </label>
+
+    <input
+        type="file"
+        name="image"
+        class="form-control"
+        accept="image/*">
+
+    </div>
 
     <button type="submit" class="btn btn-primary">
         Send Message

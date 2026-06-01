@@ -10,23 +10,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = htmlspecialchars($_POST['phone']);
     $subject = htmlspecialchars($_POST['subject']);
     $message = htmlspecialchars($_POST['message']);
+    $imageMessage = "";
+
+if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
+
+    $uploadDir = "uploads/";
+
+    if(!is_dir($uploadDir)){
+        mkdir($uploadDir, 0777, true);
+    }
+
+    $fileName = time() . "_" . $_FILES['image']['name'];
+
+    $targetFile = $uploadDir . $fileName;
+
+    if(move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)){
+
+        $imageMessage = "
+
+Image Uploaded Successfully
+
+Saved As:
+" . $targetFile;
+
+    }
+}
 
     $to = "abalekepromise1@gmail.com"; // CHANGE THIS
 
     $mail_subject = "New Contact Form Message";
 
     $body = "
-    Name: $name
+Name: $name
 
-    Email: $email
+Email: $email
 
-    Phone: $phone
+Phone: $phone
 
-    Subject: $subject
+Subject: $subject
 
-    Message:
-    $message
-    ";
+Message:
+$message
+
+$imageMessage
+";
 
     $headers = "From: $email";
 
